@@ -1,0 +1,429 @@
+/* Overlay and modal */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  z-index: 50;
+}
+
+/* Removed overflow-y: auto and max-height to eliminate scroll bar */
+.modal {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Enhanced logo styling with gradient background */
+.logo-icon {
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+}
+
+.logo-title {
+  font-weight: bold;
+  font-size: 1.125rem;
+  color: #1f2937;
+}
+
+.logo-subtitle {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+/* Enhanced close button with hover effects */
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.close-btn:hover {
+  background-color: #f3f4f6;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  color: #6b7280;
+}
+
+/* Content */
+/* Made content scrollable with custom scrollbar styling */
+.modal-content {
+  padding: 1.5rem;
+  flex: 1;
+  overflow-y: auto;
+  max-height: 60vh;
+}
+
+/* Custom scrollbar styling to make it less intrusive */
+.modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.modal-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #1f2937;
+}
+
+/* Form */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #374151;
+  font-size: 0.875rem;
+}
+
+/* Enhanced input styling with focus states */
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background-color: #fff;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Added error styling for form validation */
+.form-group input.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.error-message {
+  color: #ef4444;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+/* Enhanced upload area with better visual feedback */
+.upload-area {
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  background-color: #f8fafc;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.upload-area:hover {
+  background-color: #f1f5f9;
+  border-color: #2563eb;
+}
+
+.upload-icon {
+  width: 48px;
+  height: 48px;
+  color: #64748b;
+  margin: 0 auto 0.75rem;
+}
+
+.upload-area p {
+  color: #64748b;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* Materials */
+/* Added container for better layout control */
+.materials-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.materials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+/* Custom scrollbar for materials list */
+.materials-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.materials-list::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 2px;
+}
+
+.materials-list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 2px;
+}
+
+/* Enhanced material item styling */
+.material-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8fafc;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  transition: background-color 0.2s ease;
+}
+
+.material-item:hover {
+  background-color: #f1f5f9;
+}
+
+.material-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.material-icon {
+  width: 20px;
+  height: 20px;
+  color: #2563eb;
+}
+
+.material-info p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #1f2937;
+}
+
+/* Added styles for material details container and file size */
+.material-details {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.material-type {
+  font-size: 0.75rem !important;
+  color: #6b7280 !important;
+}
+
+.material-size {
+  font-size: 0.75rem !important;
+  color: #6b7280 !important;
+}
+
+.material-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.material-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.375rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.material-actions button:hover {
+  background-color: #e2e8f0;
+}
+
+.icon-small {
+  width: 16px;
+  height: 16px;
+  color: #6b7280;
+}
+
+/* Enhanced add button styling */
+.add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: 2px dashed #cbd5e1;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #fff;
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+}
+
+.add-btn:hover {
+  background-color: #f8fafc;
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+/* Video Preview and Upload Styles */
+.video-preview {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8fafc;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 2px solid #e2e8f0;
+  transition: background-color 0.2s ease;
+}
+
+.video-preview:hover {
+  background-color: #f1f5f9;
+}
+
+.video-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.video-icon {
+  width: 24px;
+  height: 24px;
+  color: #dc2626;
+}
+
+.video-details p {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.video-name {
+  color: #1f2937;
+  font-weight: 500;
+}
+
+.video-size {
+  color: #6b7280;
+  font-size: 0.75rem !important;
+}
+
+.video-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.remove-video-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.375rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.remove-video-btn:hover {
+  background-color: #fee2e2;
+}
+
+.change-video-btn {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.change-video-btn:hover {
+  background-color: #1d4ed8;
+}
+
+/* Footer */
+.modal-footer {
+  padding: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: flex-end;
+  flex-shrink: 0;
+  background-color: #f8fafc;
+}
+
+/* Enhanced OK button with better styling */
+.ok-btn {
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+}
+
+.ok-btn:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+  transform: translateY(-1px);
+}

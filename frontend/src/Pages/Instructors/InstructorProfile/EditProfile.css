@@ -1,0 +1,407 @@
+.edit-profile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+}
+
+/* Removed overflow-y: auto and max-height to eliminate scroll bar */
+.edit-profile-modal {
+  background: #e3f2fd;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.edit-profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Enhanced logo icon with gradient background like AddUnits */
+.logo-icon {
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, #1976d2, #0d47a1);
+  color: white;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  box-shadow: 0 2px 4px rgba(25, 118, 210, 0.2);
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1976d2;
+  letter-spacing: 1px;
+}
+
+.logo-subtitle {
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: -2px;
+}
+
+/* Enhanced close button with better hover effects */
+.close-btn {
+  background: #f44336;
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  background: #d32f2f;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Content */
+/* Made content scrollable with custom scrollbar styling */
+.edit-profile-content {
+  padding: 2rem;
+  flex: 1;
+  overflow-y: auto;
+  max-height: 60vh;
+}
+
+/* Custom scrollbar styling to make it less intrusive */
+.edit-profile-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.edit-profile-content::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.edit-profile-content::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.edit-profile-content::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.edit-profile-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 2rem 0;
+}
+
+/* Profile Image Section */
+.profile-image-section {
+  margin-bottom: 2rem;
+}
+
+.profile-image-label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.profile-image-upload {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+/* Enhanced upload placeholder with better hover effects */
+.upload-placeholder {
+  width: 150px;
+  height: 150px;
+  border: 3px dashed #1976d2;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upload-placeholder:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+  border-color: #0d47a1;
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.2);
+}
+
+/* Added styles for image preview container */
+.image-preview-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.image-preview-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.profile-image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Added overlay for image preview with action buttons */
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 12px;
+}
+
+.image-preview-container:hover .image-overlay {
+  opacity: 1;
+}
+
+.change-image-btn,
+.remove-image-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.change-image-btn {
+  background: #1976d2;
+  color: white;
+}
+
+.change-image-btn:hover {
+  background: #0d47a1;
+  transform: translateY(-1px);
+}
+
+.remove-image-btn {
+  background: #f44336;
+  color: white;
+}
+
+.remove-image-btn:hover {
+  background: #d32f2f;
+  transform: translateY(-1px);
+}
+
+.camera-icon,
+.remove-icon {
+  width: 12px;
+  height: 12px;
+}
+
+/* Updated upload icon styling */
+.upload-icon {
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+
+.upload-text {
+  font-size: 0.75rem;
+  color: #666;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* Form Styles */
+.edit-profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.form-label::after {
+  color: #f44336;
+  margin-left: 0.25rem;
+}
+
+/* Enhanced input and textarea styling with better focus states */
+.form-input,
+.form-textarea {
+  padding: 0.75rem 1rem;
+  border: 2px solid #1976d2;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #0d47a1;
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+  transform: translateY(-1px);
+}
+
+.form-input.error,
+.form-textarea.error {
+  border-color: #f44336;
+  box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.1);
+}
+
+.error-message {
+  color: #f44336;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: #999;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: inherit;
+}
+
+/* Action Buttons */
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.discard-btn,
+.save-btn {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+/* Enhanced discard button with better hover effects */
+.discard-btn {
+  background: white;
+  color: #333;
+  border: 2px solid #ddd;
+}
+
+.discard-btn:hover {
+  background: #f5f5f5;
+  border-color: #bbb;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced save button with gradient background and better hover effects */
+.save-btn {
+  background: linear-gradient(135deg, #00bcd4, #00acc1);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 188, 212, 0.2);
+}
+
+.save-btn:hover {
+  background: linear-gradient(135deg, #00acc1, #0097a7);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 188, 212, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .edit-profile-overlay {
+    padding: 1rem;
+  }
+
+  .edit-profile-content {
+    padding: 1.5rem;
+  }
+
+  .edit-profile-header {
+    padding: 1rem 1.5rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .discard-btn,
+  .save-btn {
+    width: 100%;
+  }
+}

@@ -1,0 +1,117 @@
+.quiz-container {
+    display: flex;
+    max-width: 1000px;
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: #fff;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    width: 220px;
+    background: #f9f9f9;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .progress-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 10px solid #007acc;
+    border-top-color: #ddd;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .progress-text {
+    font-size: 22px;
+    font-weight: bold;
+    color: #007acc;
+  }
+  
+  .question-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .question-btn {
+    border: 2px solid #007acc;
+    background: white;
+    border-radius: 20px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .question-btn.answered {
+    background: #e6f4ff;
+    color: #007acc;
+  }
+  
+  /* Main Content */
+  .main-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #e6f4ff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  .header h2{
+    font-size: 35PX;
+    margin-left: 70px;
+    color: #353535;
+  }
+  
+  .course-image {
+    width: 250px;
+    height: auto;
+  }
+  
+  .question-box {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  
+  .question-box h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+  }
+  
+  .options label {
+    border: 2px solid #007acc;
+    border-radius: 20px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+  
+  .options input {
+    accent-color: #007acc;
+  }
+  
