@@ -1,114 +1,158 @@
+import { useState, useEffect } from "react";
+import { MessageSquare, Bell, User, LogOut } from "lucide-react";
 import "./SDashboard.css";
-import book from "../../../Assets/book.png";
-import certificate from "../../../Assets/certificate.png";
-import clock from "../../../Assets/cc.png";
-import average from "../../../Assets/average.png";
-import { FaBars } from "react-icons/fa";
-import { useState } from "react";
 
-export default function Dashboard() {
-  const [isOpen, setIsOpen] = useState(false);
+// Header Component
+function Header() {
+  return (
+    <header className="header">
+      <div className="logo-container">
+        <h1 className="logo-title">LEARNORA</h1>
+        <p className="logo-subtitle">Skills for Life</p>
+      </div>
+      <div className="header-actions">
+        <button className="icon-button" aria-label="Messages">
+          <MessageSquare />
+        </button>
+        <button className="icon-button" aria-label="Notifications">
+          <Bell />
+        </button>
+        <button className="icon-button" aria-label="User Profile">
+          <User />
+        </button>
+      </div>
+    </header>
+  );
+}
+
+// Sidebar Component
+function Sidebar() {
+  const [activeItem, setActiveItem] = useState("Dashboard");
+
+  const navItems = [
+    "Dashboard",
+    "My Courses",
+    "Assignments & Quizzes",
+    "Evaluation",
+    "Certificate & Progress",
+    "Discussion Forum",
+    "Payments",
+    "Settings",
+  ];
+
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      await fetch("http://localhost:5000/api/auth/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      localStorage.removeItem("token");
+      alert("Logged out successfully!");
+      window.location.href = "/"; // navigate('/Homepage');
+    } catch (error) {
+      console.error("Logout error:", error);
+      alert("Logout failed.");
+    }
+  };
 
   return (
-    <div className="dashboard-container">
-      <button className="hamburger" onClick={() => setIsOpen(!isOpen)}>
-        <FaBars />
+    <aside className="sidebar">
+      <nav className="sidebar-nav">
+        {navItems.map((item) => (
+          <button
+            key={item}
+            className={`nav-item ${activeItem === item ? "active" : ""}`}
+            onClick={() => setActiveItem(item)}
+          >
+            {item}
+          </button>
+        ))}
+      </nav>
+      <button className="logout-button" onClick={handleLogout}>
+        <LogOut />
+        <span>Log Out</span>
       </button>
-      <aside className={`sidebar ${isOpen ? "open" : ""}`}>
-        <ul className="sidebar-menu">
-          <li>Dashboard</li>
-          <li>My Courses</li>
-          <li>Assignments & Quizzes</li>
-          <li>Evaluation</li>
-          <li>Certificate & Progress</li>
-          <li>Discussion Forum</li>
-          <li>Payments</li>
-          <li>Settings</li>
-        </ul>
-      </aside>
+    </aside>
+  );
+}
 
-      {/* Main Content */}
-      <main className="main-content">
-        <header className="header">
-          <h2>Welcome Back, Alex! 👋</h2>
-          <p>Continue your learning journey and achieve your goals.</p>
-        </header>
+// CourseCard Component
+function CourseCard() {
+  const [isPlaying, setIsPlaying] = useState(false);
 
-        {/* Stats Section */}
-        <section className="stats">
-          <div className="stat-card">
-            <img src={book} className="icon" />
-            <div className="stat-info">
-              <p>Enrolled Courses</p>
-              <h3>04</h3>
-            </div>
+  const handlePlayClick = () => {
+    setIsPlaying(!isPlaying);
+    console.log("Play button clicked");
+  };
+
+  return (
+    <div className="video-card">
+      <div className="video-header">React Basics</div>
+      <div className="video-thumbnail" onClick={handlePlayClick}>
+        <button className="play-button" aria-label="Play video">
+          <div className="play-icon"></div>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// Main Dashboard Component
+export default function Dashboard() {
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.warn("No token found, redirecting to login...");
+          window.location.href = "/Login";
+          return;
+        }
+
+        const response = await fetch("http://localhost:5000/api/users/me", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch user");
+        }
+
+        const user = await response.json();
+        setUserName(user.name || "Student");
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  return (
+    <div className="app-container">
+      <Header />
+      <div className="main-content">
+        <Sidebar />
+        <div className="content-area">
+          <div className="welcome-section">
+            <h2 className="welcome-title">
+              Welcome Back, {userName}! 👋
+            </h2>
+            <p className="welcome-subtitle">
+              Continue your learning journey and achieve your goals.
+            </p>
           </div>
-          <div className="stat-card">
-            <img src={clock} className="icon" />
-            <div className="stat-info">
-              <p>Hours Learned</p>
-              <h3>27</h3>
-            </div>
+          <div className="course-container">
+            <CourseCard />
           </div>
-          <div className="stat-card">
-            <img src={certificate} className="icon" />
-            <div className="stat-info">
-              <p>Certificates</p>
-              <h3>03</h3>
-            </div>
-          </div>
-          <div className="stat-card">
-            <img src={average} className="icon" />
-            <div className="stat-info">
-              <p>Average Progress</p>
-              <h3>50%</h3>
-            </div>
-          </div>
-        </section>
-
-        {/* Continue Learning */}
-        <section className="learning-section">
-          <h3>▶ Continue Learning</h3>
-          <div className="course-card">
-            <div className="course-header">
-              <h3>React Development Masterclass</h3>
-              <button className="continue-btn">Continue</button>
-            </div>
-
-            <div className="progress-row">
-              <span>Progress</span>
-              <span>75%</span>
-            </div>
-
-            <div className="progress-bar">
-              <div className="progress-fill" style={{ width: "75%" }}></div>
-            </div>
-          </div>
-
-          <div className="course-card">
-            <div className="course-header">
-              <h3>UI/UX Design Fundamentals</h3>
-              <button className="continue-btn">Continue</button>
-            </div>
-
-            <div className="progress-row">
-              <span>Progress</span>
-              <span>50%</span>
-            </div>
-
-            <div className="progress-bar">
-              <div className="progress-fill" style={{ width: "55%" }}></div>
-            </div>
-          </div>
-        </section>
-
-        {/* Study Streak */}
-        <section className="streak-card">
-          <h2>07</h2>
-          <p>Day Study Streak</p>
-          <span>Keep it up! You're doing great!</span>
-        </section>
-      </main>
+        </div>
+      </div>
     </div>
   );
 }
