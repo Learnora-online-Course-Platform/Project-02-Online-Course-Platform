@@ -90,3 +90,29 @@ exports.resetPassword = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.verifyEmail = async (req, res) => {
+  const { token } = req.params;
+  try {
+    const user = await User.findOne({ where: { emailVerificationToken: token } });
+    if (!user) return res.status(400).json({ message: 'Invalid or expired token' });
+
+    user.emailVerified = true;
+    user.emailVerificationToken = null;
+    await user.save();
+
+    res.json({ message: 'Email verified successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.logout = async (req, res) => {
+  try {
+    // Since JWTs are stateless, there's nothing to invalidate on the server
+    // The frontend should simply remove the token from localStorage
+    res.status(200).json({ message: 'Logout successful. Please remove your token on the client.' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};

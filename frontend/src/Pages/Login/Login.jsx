@@ -1,7 +1,7 @@
 import { useState } from "react";
-import "../Student/RegisterPage/StudentRegistration"; // ✅ Reuse the same CSS
-import StudentLoginImg from "../../Assets/StudentLogin.png";
 import { useNavigate } from "react-router-dom";
+import "../Student/RegisterPage/StudentRegistration.css"; // Reuse same CSS
+import StudentLoginImg from "../../Assets/StudentLogin.png";
 
 export default function StudentLogin() {
   const navigate = useNavigate();
@@ -9,6 +9,7 @@ export default function StudentLogin() {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -17,10 +18,37 @@ export default function StudentLogin() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login data:", formData);
-    // TODO: Add backend API integration: POST http://localhost:5000/api/auth/login
+    setLoading(true);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Login successful!");
+        console.log("Token:", data.token);
+
+        // Save token locally for authenticated requests
+        localStorage.setItem("token", data.token);
+
+        // Redirect to student dashboard
+        navigate("/SDashboard");
+      } else {
+        alert(data.message || "Invalid credentials");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Login failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleRegisterClick = () => {
@@ -70,14 +98,14 @@ export default function StudentLogin() {
                 />
               </div>
 
-              <button type="submit" className="register-button">
-                Login
+              <button type="submit" className="register-button" disabled={loading}>
+                {loading ? "Logging in..." : "Login"}
               </button>
             </form>
 
             <div className="login-section">
               <p className="login-text">
-                Don't have an account?{" "}
+                Don’t have an account?{" "}
                 <span onClick={handleRegisterClick} className="login-link">
                   Register
                 </span>
