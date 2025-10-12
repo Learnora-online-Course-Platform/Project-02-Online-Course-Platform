@@ -11,5 +11,7 @@ router.post('/change-password', auth, userCtrl.changePassword);
 // admin
 router.get('/', auth, requireRole('admin'), userCtrl.listUsers);
 router.delete('/:id', auth, requireRole('admin'), userCtrl.deleteUser);
+router.post('/add', auth, requireRole('admin'), userCtrl.addUserByAdmin);
+
 
 module.exports = router;

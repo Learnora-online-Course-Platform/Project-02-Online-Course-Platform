@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "./Usermanagement.css";
+import { MessageSquare, Bell, User, LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 // import img1 from './img/logo.png';
 // import img2 from './img/image 13.png';
 // import img3 from './img/image 11.png';
@@ -10,6 +12,7 @@ import "./Usermanagement.css";
 
 
 function App() {
+  const navigate = useNavigate();
 
   const users = [
   {
@@ -51,23 +54,23 @@ function App() {
   
   return (
     <div className="app-root">
-<header className="navbar">
-       <img src={img1}alt="Learnora Logo" className="logo-img" />
-
-        <nav>
-          <a href="#">Dashboard</a>
-          <a href="#">Courses</a>
-          <a href="#">Settings</a>
-        </nav>
-        <div className="icons">
-          
-          <img src={img2}alt="Learnora msg" className="msg-img" />
-          <img src={img3}alt="Learnora note" className="note-img" />
-          <img src={img4}alt="Learnora user" className="user-img" />
-          
-        
-        </div>
-      </header>
+<header className="header">
+      <div className="logo-container">
+        <h1 className="logo-title">LEARNORA</h1>
+        <p className="logo-subtitle">Skills for Life</p>
+      </div>
+      <div className="header-actions">
+        <button className="icon-button" aria-label="Messages">
+          <MessageSquare />
+        </button>
+        <button className="icon-button" aria-label="Notifications">
+          <Bell />
+        </button>
+        <button className="icon-button" aria-label="User Profile">
+          <User />
+        </button>
+      </div>
+    </header>
 
       <main className="page-container">
         
@@ -82,7 +85,8 @@ function App() {
               <span className="search-icon">🔍</span>
               <input type="text" placeholder="Search name,email,role" />
             </div>
-            <button className="btn-add">➕ Add User</button>
+            <button className="btn-add"
+            onClick={() => navigate("/AddUser")}>➕ Add User</button>
           </div>
 
  

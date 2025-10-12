@@ -19,37 +19,48 @@ export default function StudentLogin() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+  e.preventDefault();
+  setLoading(true);
 
-    try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+  try {
+    const response = await fetch("http://localhost:5000/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
 
-      const data = await response.json();
+    const data = await response.json();
 
-      if (response.ok) {
-        alert("Login successful!");
-        console.log("Token:", data.token);
+    if (response.ok) {
+      alert("Login successful!");
+      console.log("Token:", data.token);
 
-        // Save token locally for authenticated requests
-        localStorage.setItem("token", data.token);
+      // ✅ Save token & user info
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
-        // Redirect to student dashboard
-        navigate("/SDashboard");
+      // ✅ Role-based redirection
+      const userRole = data.user.role?.toLowerCase();
+
+      if (userRole === "admin") {
+        navigate("/AdminDashboard");
+      } else if (userRole === "instructor") {
+        navigate("/InstructorDashboard");
       } else {
-        alert(data.message || "Invalid credentials");
+        navigate("/SDashboard"); // default: student dashboard
       }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Login failed. Please try again.");
-    } finally {
-      setLoading(false);
+
+    } else {
+      alert(data.message || "Invalid credentials");
     }
-  };
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Login failed. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleRegisterClick = () => {
     navigate("/StudentRegistration");

@@ -37,3 +37,55 @@ exports.deleteUser = async (req, res) => {
   await User.destroy({ where: { id }});
   res.json({ message: 'Deleted' });
 };
+
+// Admin: Add new user
+exports.addUserByAdmin = async (req, res) => {
+  try {
+    const { name, email, password, confirmPassword, role, contactNumber, qualifications } = req.body;
+
+    // 1️⃣ Validate required fields
+    if (!name || !email || !password || !confirmPassword || !role) {
+      return res.status(400).json({ message: "All required fields must be filled" });
+    }
+
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: "Passwords do not match" });
+    }
+
+    // 2️⃣ Check if user already exists
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(409).json({ message: "Email already in use" });
+    }
+
+    // 3️⃣ Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // 4️⃣ Create new user
+    const newUser = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      role: role.toLowerCase(), // convert "Student" -> "student"
+      contactNumber,
+      qualifications,
+    });
+
+    // 5️⃣ Send success response
+    res.status(201).json({
+      message: "User created successfully",
+      user: {
+        id: newUser.id,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role,
+        contactNumber: newUser.contactNumber,
+        qualifications: newUser.qualifications,
+      },
+    });
+  } catch (error) {
+    console.error("Add user error:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
