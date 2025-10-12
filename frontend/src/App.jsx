@@ -8,6 +8,7 @@ import RegisterPage from "./Pages/Student/RegisterPage/StudentRegistration.jsx";
 import Navbar from "./Components/Navbar.jsx";
 import AdminDashBoard from "./Pages/Admin/AdminDashboard/AdminDashboard.jsx";
 import Usermanagement from "./Pages/Admin/UserManagement/UserManagement.jsx";
+import AddUser from "./Pages/Admin/Usermanagement/AddUser.jsx";
 import CourseCreation from "./Pages/Instructors/CourseCreation/CourseCreation.jsx";
 import AddUnits from "./Pages/Instructors/CourseCreation/AddUnits.jsx";
 import CourseManagement from "./Pages/Instructors/CourseManagement/CourseManagement.jsx"
@@ -32,6 +33,7 @@ function App() {
           <Route path="/RegisterPage" element={<RegisterPage />} />
           <Route path="/AdminDashBoard" element={<AdminDashBoard />} />
           <Route path="/Usermanagement" element={<Usermanagement />} />
+          <Route path="/AddUser" element={<AddUser />} />
           <Route path="/CourseCreation" element={<CourseCreation />} />
           <Route path="/AddUnits" element={<AddUnits />} />
           <Route path='/CourseManagement' element={<CourseManagement />} />

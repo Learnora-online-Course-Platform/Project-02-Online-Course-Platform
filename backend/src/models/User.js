@@ -10,6 +10,10 @@ const User = sequelize.define("User", {
 
   password: { type: DataTypes.STRING, allowNull: false },
 
+  contactNumber: { type: DataTypes.STRING, allowNull: true },
+
+  qualifications: { type: DataTypes.STRING, allowNull: true },
+
   bio: { type: DataTypes.TEXT, allowNull: true },
 
   profileImage: { type: DataTypes.STRING, allowNull: true },
