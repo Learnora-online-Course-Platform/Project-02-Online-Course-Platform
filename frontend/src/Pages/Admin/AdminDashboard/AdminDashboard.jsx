@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import "./AdminDashboard.css";
 import { Users, BookOpen, DollarSign, BarChart3, Settings, LogOut, MessageSquare, Bell, User, Menu } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const [userName, setUserName] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("Dashboard");
+  const navigate = useNavigate();
 
   const navItems = [
     "Dashboard",
@@ -15,6 +18,26 @@ const Dashboard = () => {
     "Settings"
   ];
 
+  React.useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.name) {
+      setUserName(user.name);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setSidebarOpen(true);
+      } else {
+        setSidebarOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  
   const handleLogout = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -77,6 +100,13 @@ const Dashboard = () => {
                 onClick={() => {
                   setActiveItem(item);
                   setSidebarOpen(false);
+
+                  if (item === "User Management") navigate("/Usermanagement");
+                  else if (item === "Course Management") navigate("/CourseManagement");
+                  else if (item === "Payment Management") navigate("/PaymentManagement");
+                  else if (item === "Reports/Analytics") navigate("/Reports");
+                  else if (item === "Settings") navigate("/AdminSettings");
+                  else navigate("/AdminDashboard");
                 }}
               >
                 {item}
@@ -92,7 +122,7 @@ const Dashboard = () => {
         {/* Content Area */}
         <div className="content-area">
           <div className="welcome-section">
-            <h2 className="welcome-title">Welcome Back, Tom! 👋</h2>
+            <h2 className="welcome-title">Welcome Back, {userName}! 👋</h2>
             <p className="welcome-subtitle">
               Manage your platform and monitor performance.
             </p>
